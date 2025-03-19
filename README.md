@@ -69,8 +69,13 @@ To set up automated imports:
 ## CSV Format Requirements
 The import script expects the following CSV format:
 - Header row with columns: ym, size_factor, value_factor, mom_factor, qual_factor, lowvol_factor, rev_factor, ewtret, vwtret
-- Year-month format in the ym column (e.g., "1987m1")
+- Year-month format in the ym column (e.g., "1987m1") - automatically transformed to "1987-01" format for database storage
 - Numeric values for all factor columns
+
+### Data Format Transformation
+The import script automatically handles format transformation:
+- Input CSV format: "1987m1" (year followed by 'm' and month number)
+- Database storage format: "1987-01" (ISO format with zero-padded months)
 
 ## Data Governance
 For best practices in managing your REIT factors data:

@@ -11,6 +11,18 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
+// Format year-month values from "1987m1" to "1987-01"
+function formatYearMonth(ymString) {
+  // Convert formats like "1987m1" to "1987-01"
+  const match = ymString.match(/(\d{4})m(\d{1,2})/);
+  if (match) {
+    const year = match[1];
+    const month = match[2].padStart(2, '0');
+    return `${year}-${month}`;
+  }
+  return ymString; // Return as-is if format is different
+}
+
 async function importFactors(filePath) {
   console.log(`Starting import from ${filePath}`);
   
@@ -29,8 +41,11 @@ async function importFactors(filePath) {
     
     console.log(`Found ${records.length} records to import`);
     
-    // Validate data
-    const validRecords = records.filter(record => {
+    // Transform and validate data
+    const validRecords = records.map(record => ({
+      ...record,
+      ym: formatYearMonth(record.ym)
+    })).filter(record => {
       // Basic validation - ensure required fields exist
       if (!record.ym) {
         console.warn(`Invalid record format, missing ym: ${JSON.stringify(record)}`);
