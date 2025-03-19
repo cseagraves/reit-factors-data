@@ -1,0 +1,25 @@
+{
+  "name": "reit-factors-data",
+  "version": "1.0.0",
+  "description": "Repository for REIT factor data management and processing",
+  "main": "scripts/import-factors.js",
+  "type": "module",
+  "scripts": {
+    "import": "node scripts/import-factors.js",
+    "import:reit": "node scripts/import-factors.js data/raw/REIT_Factors_Mar2025.csv",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.4",
+    "csv-parse": "^5.5.2",
+    "dotenv": "^16.3.1"
+  },
+  "keywords": [
+    "reit",
+    "factors",
+    "supabase",
+    "data"
+  ],
+  "author": "",
+  "license": "ISC"
+} 

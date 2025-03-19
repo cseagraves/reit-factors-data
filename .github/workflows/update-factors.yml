@@ -1,0 +1,27 @@
+name: Update REIT Factors
+
+on:
+  schedule:
+    # Run monthly on the 1st at 2am UTC
+    - cron: '0 2 1 * *'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  update-factors:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Run import script
+        run: node scripts/import-factors.js data/raw/REIT_Factors_Mar2025.csv
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }} 
